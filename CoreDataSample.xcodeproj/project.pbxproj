@@ -22,6 +22,9 @@
 		8172211C18F65C9E0061902F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 817220FB18F65C9E0061902F /* UIKit.framework */; };
 		8172212418F65C9E0061902F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8172212218F65C9E0061902F /* InfoPlist.strings */; };
 		8172212618F65C9E0061902F /* CoreDataSampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8172212518F65C9E0061902F /* CoreDataSampleTests.m */; };
+		8172213018F65CAF0061902F /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8172212F18F65CAF0061902F /* CoreData.framework */; };
+		8172213218F65CB70061902F /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8172213118F65CB70061902F /* CoreLocation.framework */; };
+		8172213518F65D740061902F /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8172213418F65D740061902F /* RootViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +58,10 @@
 		8172212118F65C9E0061902F /* CoreDataSampleTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CoreDataSampleTests-Info.plist"; sourceTree = "<group>"; };
 		8172212318F65C9E0061902F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		8172212518F65C9E0061902F /* CoreDataSampleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CoreDataSampleTests.m; sourceTree = "<group>"; };
+		8172212F18F65CAF0061902F /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		8172213118F65CB70061902F /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		8172213318F65D740061902F /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
+		8172213418F65D740061902F /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +69,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8172213218F65CB70061902F /* CoreLocation.framework in Frameworks */,
+				8172213018F65CAF0061902F /* CoreData.framework in Frameworks */,
 				817220FA18F65C9E0061902F /* CoreGraphics.framework in Frameworks */,
 				817220FC18F65C9E0061902F /* UIKit.framework in Frameworks */,
 				817220F818F65C9E0061902F /* Foundation.framework in Frameworks */,
@@ -103,6 +112,8 @@
 		817220F618F65C9E0061902F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8172213118F65CB70061902F /* CoreLocation.framework */,
+				8172212F18F65CAF0061902F /* CoreData.framework */,
 				817220F718F65C9E0061902F /* Foundation.framework */,
 				817220F918F65C9E0061902F /* CoreGraphics.framework */,
 				817220FB18F65C9E0061902F /* UIKit.framework */,
@@ -119,6 +130,8 @@
 				8172210918F65C9E0061902F /* Main_iPhone.storyboard */,
 				8172210C18F65C9E0061902F /* Main_iPad.storyboard */,
 				8172210F18F65C9E0061902F /* ViewController.h */,
+				8172213318F65D740061902F /* RootViewController.h */,
+				8172213418F65D740061902F /* RootViewController.m */,
 				8172211018F65C9E0061902F /* ViewController.m */,
 				8172211218F65C9E0061902F /* Images.xcassets */,
 				817220FE18F65C9E0061902F /* Supporting Files */,
@@ -255,6 +268,7 @@
 			files = (
 				8172211118F65C9E0061902F /* ViewController.m in Sources */,
 				8172210818F65C9E0061902F /* AppDelegate.m in Sources */,
+				8172213518F65D740061902F /* RootViewController.m in Sources */,
 				8172210418F65C9E0061902F /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
