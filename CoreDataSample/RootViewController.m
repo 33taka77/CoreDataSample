@@ -7,6 +7,7 @@
 //
 
 #import "RootViewController.h"
+#import "Event.h"
 
 @interface RootViewController ()
 
@@ -59,6 +60,29 @@
     self.navigationItem.rightBarButtonItem = self.addButton;
     
     [[self LocationManager] startUpdatingLocation];
+    self.eventsArray = [[NSMutableArray alloc] init];
+}
+
+- (void)addEvent
+{
+    CLLocation* location = [self.locationManager location];
+    if( location != nil ){
+        Event* event = (Event*)[NSEntityDescription insertNewObjectForEntityForName:@"Event" inManagedObjectContext:self.managedObjectContext];
+        CLLocationCoordinate2D coodination = [location coordinate];
+        event.latitude = [NSNumber numberWithDouble: coodination.latitude];
+        event.longitude = [NSNumber numberWithDouble: coodination.longitude];
+        event.creationDate = [NSDate date];
+        NSError *error = nil;
+        if (![self.managedObjectContext save:&error]) {
+            // エラーを処理する。 }
+            NSLog(@"data save error: %@",error);
+            return;
+        }
+        [self.eventsArray insertObject:event atIndex:0];
+        NSIndexPath* indexpath = [NSIndexPath indexPathForRow:0 inSection:0];
+        [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:indexpath] withRowAnimation:UITableViewRowAnimationFade];
+        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -69,30 +93,48 @@
 
 #pragma mark - Table view data source
 
+/*
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
 #warning Potentially incomplete method implementation.
     // Return the number of sections.
     return 0;
 }
+*/
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
+//#warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 0;
+    return self.eventsArray.count;
 }
 
-/*
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"StandardCell" forIndexPath:indexPath];
     
     // Configure the cell...
+    static NSDateFormatter* dataFormatter = nil;
+    if( dataFormatter == nil ){
+        dataFormatter = [[NSDateFormatter alloc] init];
+        [dataFormatter setTimeStyle:NSDateFormatterMediumStyle];
+        [dataFormatter setDateStyle:NSDateFormatterMediumStyle];
+    }
+    static NSNumberFormatter* numberForatter = nil;
+    if( numberForatter == nil ){
+        numberForatter = [[NSNumberFormatter alloc] init];
+        [numberForatter setNumberStyle:NSNumberFormatterDecimalStyle];
+        [numberForatter setMaximumFractionDigits:3];
+    }
+    Event* event = self.eventsArray[indexPath.row];
     
+    cell.textLabel.text = [dataFormatter stringFromDate:event.creationDate];
+    NSString* string = [NSString stringWithFormat:@"%@, %@", [numberForatter stringFromNumber:event.latitude], [numberForatter stringFromNumber:event.longitude] ];
+    cell.detailTextLabel.text = string;
     return cell;
 }
-*/
+
 
 /*
 // Override to support conditional editing of the table view.
