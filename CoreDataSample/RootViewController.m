@@ -60,7 +60,23 @@
     self.navigationItem.rightBarButtonItem = self.addButton;
     
     [[self LocationManager] startUpdatingLocation];
-    self.eventsArray = [[NSMutableArray alloc] init];
+    //self.eventsArray = [[NSMutableArray alloc] init];
+    
+    NSFetchRequest* request = [[NSFetchRequest alloc] init];
+    NSEntityDescription* entity = [NSEntityDescription entityForName:@"Event" inManagedObjectContext:self.managedObjectContext];
+    [request setEntity:entity];
+    NSSortDescriptor* sortDesc = [[NSSortDescriptor alloc] initWithKey:@"creationDate" ascending:NO];
+    NSArray* sortDescripters = [[NSArray alloc] initWithObjects:sortDesc, nil];
+    [request setSortDescriptors:sortDescripters];
+    NSError* error = nil;
+    NSMutableArray* resultArray = [[self.managedObjectContext executeFetchRequest:request error:&error] mutableCopy];
+    if( resultArray == nil ){
+        NSLog(@"Fetch error: %@",error);
+        return;
+    }
+    //[self.eventsArray setArray:resultArray];
+    //[self setEventsArray:resultArray];
+    self.eventsArray = resultArray;
 }
 
 - (void)addEvent
@@ -85,6 +101,21 @@
     }
 }
 
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if( editingStyle == UITableViewCellEditingStyleDelete ){
+        NSManagedObject* object = self.eventsArray[indexPath.row];
+        [self.managedObjectContext deleteObject:object];
+        [self.eventsArray removeObjectAtIndex:indexPath.row];
+        [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath, nil] withRowAnimation:YES];
+        NSError *error = nil;
+        if (![self.managedObjectContext save:&error]) {
+            // エラーを処理する。 }
+            NSLog(@"data save error: %@",error);
+            return;
+        }
+    }
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
